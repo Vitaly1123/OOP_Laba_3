@@ -18,7 +18,9 @@ class Program
         {
             string fileName = $"{i}.txt";
             ProcessFile(fileName, validProducts, noFiles, badDataFiles, overflowFiles);
+
         }
+        SaveResults(noFiles, badDataFiles, overflowFiles);
 
 
     }
@@ -55,6 +57,19 @@ class Program
         catch (Exception ex)
         {
             Console.WriteLine($"Помилка при обробці файлу {fileName}: {ex.Message}");
+        }
+    }
+    static void SaveResults(List<string> noFiles, List<string> badDataFiles, List<string> overflowFiles)
+    {
+        try
+        {
+            File.WriteAllLines("no_file.txt", noFiles);
+            File.WriteAllLines("bad_data.txt", badDataFiles);
+            File.WriteAllLines("overflow.txt", overflowFiles);
+        }
+        catch (IOException ioEx)
+        {
+            Console.WriteLine($"Помилка запису файлу: {ioEx.Message}");
         }
     }
 
