@@ -49,7 +49,7 @@ namespace OOP_Laba_3_2
             listBox1.Size = new Size(301, 184);
             listBox1.TabIndex = 1;
             listBox1.Visible = false;
-            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            listBox1.SelectedIndexChanged += DisplaySelectedImage;
             // 
             // pictureBox1
             // 

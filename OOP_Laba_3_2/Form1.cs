@@ -75,7 +75,7 @@ namespace OOP_Laba_3_2
             pictureBox1.Size = new Size(listBox1.Width, listBox1.Height);
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void DisplaySelectedImage(object sender, EventArgs e)
         {
             try
             {

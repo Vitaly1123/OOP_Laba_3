@@ -30,11 +30,17 @@ class Program
             string[] lines = File.ReadAllLines(fileName);
             int firstNumber, secondNumber;
 
-            if (!int.TryParse(lines[0], out firstNumber) || !int.TryParse(lines[1], out secondNumber))
+            try
+            {
+                firstNumber = int.Parse(lines[0]);
+                secondNumber = int.Parse(lines[1]);
+            }
+            catch
             {
                 badDataFiles.Add(fileName);
                 return;
             }
+
 
             try
             {
