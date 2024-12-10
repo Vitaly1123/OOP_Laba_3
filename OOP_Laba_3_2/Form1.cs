@@ -68,5 +68,64 @@ namespace OOP_Laba_3_2
             listBox1.EndUpdate();
         }
 
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            // Центруємо PictureBox щодо списку
+            pictureBox1.Location = new Point(listBox1.Location.X, listBox1.Location.Y + listBox1.Height + 20);
+            pictureBox1.Size = new Size(listBox1.Width, listBox1.Height);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox1.Visible = true;
+                string selectedFilePath = filePaths[listBox1.SelectedIndex];
+                pictureBox1.Load(selectedFilePath);
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox2.Text = "New images";
+            listBox2.Visible = true;
+            if (listBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Будь ласка, оберіть файл зі списку.");
+                return;
+            }
+
+            string selectedFilePath = filePaths[listBox1.SelectedIndex];
+            string targetDirectory = "C:\\КС-231\\2 Курс\\ООП\\OOP_Laba_3\\OOP_Laba_3_2\\New_images";
+
+            try
+            {
+                Bitmap bitmap = new Bitmap(selectedFilePath);
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+
+                // Зберігаємо зображення у форматі GIF
+                string fileName = Path.GetFileNameWithoutExtension(selectedFilePath);
+                string newFileName = fileName + ".gif";
+                string filePathInDirectory = Path.Combine(targetDirectory, newFileName);
+                bitmap.Save(filePathInDirectory, ImageFormat.Gif);
+
+                listBox2.Items.Add(newFileName);
+                pictureBox2.Visible = true;
+                pictureBox2.Load(filePathInDirectory);
+                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox2.Size = new System.Drawing.Size(225, 200);
+
+                MessageBox.Show($"Файл успішно збережено як {newFileName}.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при обробці файлу: {ex.Message}");
+            }
+        }
     }
 }
