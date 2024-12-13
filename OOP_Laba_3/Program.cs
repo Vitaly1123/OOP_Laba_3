@@ -28,19 +28,9 @@ class Program
         try
         {
             string[] lines = File.ReadAllLines(fileName);
-            int firstNumber, secondNumber;
 
-            try
-            {
-                firstNumber = int.Parse(lines[0]);
-                secondNumber = int.Parse(lines[1]);
-            }
-            catch
-            {
-                badDataFiles.Add(fileName);
-                return;
-            }
-
+            int firstNumber = int.Parse(lines[0]);
+            int secondNumber = int.Parse(lines[1]);
 
             try
             {
@@ -59,9 +49,9 @@ class Program
         {
             noFiles.Add(fileName);
         }
-        catch (Exception ex)
+        catch (FormatException)
         {
-            Console.WriteLine($"Помилка при обробці файлу {fileName}: {ex.Message}");
+            badDataFiles.Add(fileName);
         }
     }
     static void SaveResults(List<string> noFiles, List<string> badDataFiles, List<string> overflowFiles)
@@ -88,12 +78,12 @@ class Program
         Console.WriteLine(overflowFiles.Count > 0 ? "Файли з переповненням при множенні:" : "Переповнень не виявлено.");
         overflowFiles.ForEach(Console.WriteLine);
 
-        if (validProducts.Count > 0)
+        try
         {
             double average = validProducts.Average();
             Console.WriteLine($"Середнє арифметичне коректних добутків: {average}");
         }
-        else
+        catch (Exception ex)
         {
             Console.WriteLine("Жодного коректного добутку не знайдено.");
         }
